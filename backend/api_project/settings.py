@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'django.contrib.sites',
+    'api_project.api_app.apps.ApiAppConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -135,3 +138,6 @@ REST_FRAMEWORK = {
 
 # for react frontend server
 CORS_ALLOW_ALL_ORIGINS = True
+
+# see https://stackoverflow.com/questions/35388637/runtimeerror-model-class-django-contrib-sites-models-site-doesnt-declare-an-ex
+SITE_ID = 1

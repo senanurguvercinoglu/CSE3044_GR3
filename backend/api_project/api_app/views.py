@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework import permissions
 
-from .serializers import UserSerializer
+from api_project.api_app.models import Recipe
+
+from .serializers import RecipeSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -13,4 +15,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class RecipeViewSet(viewsets.ModelViewSet):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
 
