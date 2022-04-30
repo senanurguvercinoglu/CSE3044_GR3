@@ -11,7 +11,7 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'user', 'name', 'recipe_description', 'likes', 'dislikes', 'calorie']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    recipe = RecipeSerializer(many=True)
+    recipe = RecipeSerializer(many=True, required=False)
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'first_name', 'last_name', 'recipe']
