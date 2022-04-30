@@ -6,9 +6,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-from api_project.api_app.models import Ingredient, Recipe
+from api_project.api_app.models import Ingredient, Recipe, Utensil
 
-from .serializers import IngredientSerializer, RecipeSerializer, UserSerializer
+from .serializers import IngredientSerializer, RecipeSerializer, UserSerializer, UtensilSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -46,7 +46,34 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(recipe)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['post'], url_path=r'set_utensil/(?P<utensil_id>\d+)')
+    def set_utensil(self, request, pk, utensil_id):
+        utensil = Utensil.objects.get(pk=utensil_id)
+        recipe = Recipe.objects.get(pk=pk)
+
+        recipe.utensils.add(utensil)
+        recipe.save()
+
+        serializer = self.get_serializer(recipe)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post'], url_path=r'unset_utensil/(?P<utensil_id>\d+)')
+    def unset_utensil(self, request, pk, utensil_id):
+        utensil = Utensil.objects.get(pk=utensil_id)
+        recipe = Recipe.objects.get(pk=pk)
+
+        recipe.utensils.remove(utensil)
+        recipe.save()
+
+        serializer = self.get_serializer(recipe)
+        return Response(serializer.data)
 
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+class UtensilViewSet(viewsets.ModelViewSet):
+    queryset = Utensil.objects.all()
+    serializer_class = UtensilSerializer
+
+
