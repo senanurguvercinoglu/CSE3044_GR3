@@ -68,6 +68,38 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(recipe)
         return Response(serializer.data)
 
+    @action(detail=False, methods=['get'])
+    def filter(self, request, *args, **kwargs):
+        """
+        Example Request
+            recipe/filter?u=1_2_3&i=3_4
+
+            u -> utensil ids
+            i -> ingredient ids
+
+            savunma notu: gittigidiyor.com da bu sekilde filtreliyormus
+        """
+        utensil_query_param = request.query_params.get('u')
+        ingredient_query_param = request.query_params.get('i')
+
+        raw_utensil_ids = utensil_query_param.split('_') if utensil_query_param is not None else None
+        raw_ingredient_ids = ingredient_query_param.split('_') if ingredient_query_param is not None else None
+
+        utensil_ids = map(lambda x: int(x), raw_utensil_ids)
+        ingredient_ids = map(lambda x: int(x), raw_ingredient_ids)
+
+        recipes = Recipe.objects.filter(
+            utensils__in=utensil_ids,
+            ingredients__in=ingredient_ids
+        )
+
+        print(
+            recipes
+        )
+        
+        return Response({'hadi': 'bismillah'})
+
+
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
