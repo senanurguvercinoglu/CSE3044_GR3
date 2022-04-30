@@ -35,6 +35,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(recipe)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['post'], url_path=r'unset_ingredient/(?P<ingredient_id>\d+)')
+    def unset_ingredient(self, request, pk, ingredient_id):
+        ingredient = Ingredient.objects.get(pk=ingredient_id)
+        recipe = Recipe.objects.get(pk=pk)
+
+        recipe.ingredients.remove(ingredient)
+        recipe.save()
+
+        serializer = self.get_serializer(recipe)
+        return Response(serializer.data)
+
+
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
