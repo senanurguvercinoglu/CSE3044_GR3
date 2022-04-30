@@ -10,7 +10,7 @@ class Recipe(models.Model):
     # ingredients
     # utensils
     calorie = models.IntegerField()
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(to=User, related_name='recipe',on_delete=models.CASCADE, blank=True, null=True)
     
     def __str__(self) -> str:
         return self.name
