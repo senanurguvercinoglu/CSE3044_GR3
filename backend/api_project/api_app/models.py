@@ -21,8 +21,8 @@ class Recipe(models.Model):
     recipe_description = models.TextField()
     likes = models.IntegerField()
     dislikes = models.IntegerField()
-    ingredients = models.ManyToManyField(Ingredient)
-    utensils = models.ManyToManyField(Utensil)
+    ingredients = models.ManyToManyField(Ingredient, related_name="ingredients")
+    utensils = models.ManyToManyField(Utensil, related_name="utensils")
     calorie = models.IntegerField()
     user = models.ForeignKey(to=User, related_name='recipe',on_delete=models.CASCADE, blank=True, null=True)
     
