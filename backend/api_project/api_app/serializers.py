@@ -7,13 +7,13 @@ from api_project.api_app.models import Ingredient, Recipe, Utensil
 class UtensilSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Utensil
-        fields = ['url', 'name']
+        fields = ['id', 'url', 'name']
 
 
 class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ['url', 'name']
+        fields = ['id', 'url', 'name']
 
 class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     ingredients = IngredientSerializer(read_only=True, many=True)
@@ -21,11 +21,11 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['url', 'user', 'name', 'recipe_description', 'likes', 'dislikes', 'calorie', 'ingredients', 'utensils']
+        fields = ['id', 'url', 'user', 'name', 'recipe_description', 'likes', 'dislikes', 'calorie', 'ingredients', 'utensils']
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     recipe = RecipeSerializer(many=True, required=False)
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'first_name', 'last_name', 'recipe']
+        fields = ['id', 'url', 'username', 'email', 'first_name', 'last_name', 'recipe']
 
