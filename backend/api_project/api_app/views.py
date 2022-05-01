@@ -82,22 +82,30 @@ class RecipeViewSet(viewsets.ModelViewSet):
         utensil_query_param = request.query_params.get('u')
         ingredient_query_param = request.query_params.get('i')
 
-        raw_utensil_ids = utensil_query_param.split('_') if utensil_query_param is not None else None
-        raw_ingredient_ids = ingredient_query_param.split('_') if ingredient_query_param is not None else None
+        raw_utensil_ids = utensil_query_param.split('_') if utensil_query_param is not None else []
+        raw_ingredient_ids = ingredient_query_param.split('_') if ingredient_query_param is not None else []
 
         utensil_ids = map(lambda x: int(x), raw_utensil_ids)
         ingredient_ids = map(lambda x: int(x), raw_ingredient_ids)
 
-        recipes = Recipe.objects.filter(
-            utensils__in=utensil_ids,
-            ingredients__in=ingredient_ids
-        )
+        recipes = Recipe.objects.all()
 
-        print(
-            recipes
-        )
-        
-        return Response({'hadi': 'bismillah'})
+        for u_id in utensil_ids:
+            recipes = recipes.filter(
+                utensils__id=u_id
+            )
+        #for i_id in ingredient_ids:
+        #    recipes = recipes.filter(
+        #        ingredients__in=i_id
+        #    ) 
+
+        for i_id in ingredient_ids:
+            recipes = recipes.filter(
+                ingredients__id=i_id
+            )
+
+        serializer = RecipeSerializer(recipes, many=True, context={'request': request})
+        return Response(serializer.data)
 
 
 class IngredientViewSet(viewsets.ModelViewSet):
