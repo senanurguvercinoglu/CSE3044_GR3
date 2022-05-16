@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from api_project.api_app.models import Ingredient, Recipe, Utensil
 
-from .serializers import IngredientSerializer, RecipeSerializer, UserSerializer, UtensilSerializer
+from .serializers import IngredientSerializer, RecipeSearchSerializer, RecipeSerializer, UserSerializer, UtensilSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -67,6 +67,17 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(recipe)
         return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def search(self, request, *args, **kwargs):
+        name = request.query_params.get('query').strip("\"")
+        print(name)
+        recipes = Recipe.objects.filter(
+            name__icontains=name    
+        )
+
+        serializer = RecipeSearchSerializer(recipes, many=True, context={'request': request})
+        return Response(data=serializer.data)
 
     @action(detail=False, methods=['get'])
     def filter(self, request, *args, **kwargs):
