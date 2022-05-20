@@ -9,8 +9,7 @@ function Recipe() {
   const[activeTab,setActiveTab]=useState('instructions');
 
   const fetchDetails=async()=>{
-    const data=await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=7e9971ff4e9045fda9e3bb69995c6f81`
-    );
+    const data=await fetch(`http://127.0.0.1:8000/recipe/${params.name}/`);
     const detailData=await data.json();
     setDetails(detailData);
     console.log(detailData);    
@@ -27,8 +26,7 @@ function Recipe() {
     <DetailWrapper>
       <div>
         <h2> 
-          {details.title}
-          <img src={details.image} alt=""/>
+          {details.name}
         </h2>
       </div>
       <Info>
@@ -41,14 +39,14 @@ function Recipe() {
          </Button>
          {activeTab === 'instructions'&&(
           <div>
-           <h3 dangerouslySetInnerHTML={{__html:details.summary}}></h3>
-           <h3 dangerouslySetInnerHTML={{__html:details.instructions}}></h3>
+           <h3 dangerouslySetInnerHTML={{__html:details.recipe_description}}></h3>
+
          </div>
          )}
          {activeTab === 'ingredients'&&(
            <ul>
-           {details.extendedIngredients.map((ingredient)=>(
-           <li key={ingredient.id}>{ingredient.original}</li>))}
+           {details.ingredients.map((i)=>(
+           <li key={i.id}>{i.name}</li>))}
          </ul>
          )}
 
