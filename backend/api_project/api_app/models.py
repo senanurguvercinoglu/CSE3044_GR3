@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,7 +26,8 @@ class Recipe(models.Model):
     utensils = models.ManyToManyField(Utensil, related_name="utensils")
     calorie = models.IntegerField()
     user = models.ForeignKey(to=User, related_name='recipe',on_delete=models.CASCADE, blank=True, null=True)
-    
+    image = models.ImageField(default='', upload_to='images')
+
     def __str__(self) -> str:
         return self.name
 
