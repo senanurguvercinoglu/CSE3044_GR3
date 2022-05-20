@@ -12,47 +12,42 @@ function Popular() {
     useEffect(() => {
         getPopular();
 
-        
+
         },[]);
-    
-    
+
+
     const getPopular=async()=>{
-         
+
         const check= localStorage.getItem('popular');
-        if(check){
-            setPopular(JSON.parse(check));
-        }else{
+        const api=  await fetch('http://127.0.0.1:8000/recipe/');
+        const data= await api.json();
 
-            const api=  await fetch('https://api.spoonacular.com/recipes/random?apiKey=7e9971ff4e9045fda9e3bb69995c6f81&number=9&tags=vegetarian'
-            );
-            const data= await api.json();
-
-            localStorage.setItem('popular', JSON.stringify(data.recipes));
-            setPopular(data.recipes);
-            console.log(data.recipes);  
-        }    
+        localStorage.setItem('popular', JSON.stringify(data));
+        setPopular(data);
+        console.log(data);  
+        
     }; 
-  
+
     return <div>
                 <Wrapper>
                     <h3>Popular Picks</h3>
                     <Splide options={{
                         perPage:4,
-                        arrows: false,
+                        arrows: true,
                         pagination:false,
                         drag:'free',
                         gap:'5rem',
                     }}>
 
-                  
+
                     {popular.map((recipe)=>{
                         return(
                             <SplideSlide key={recipe.id}>
 
                             <Card>
                                 <Link to={'/recipe/'+recipe.id}>
-                                    <p>{recipe.title}</p>
-                                    <img src={recipe.image} alt={recipe.title} />
+                                    <p>{recipe.name}</p>
+                                    <img src={recipe.image} alt={recipe.name} />
                                     <Gradient/>
                                 </Link>
 
@@ -65,9 +60,9 @@ function Popular() {
                       </Splide>
                 </Wrapper>
 
-            
+
     </div>;
-  
+
 }
 const Wrapper = styled.div`
     margin: 4rem 0rem;`;
@@ -76,7 +71,6 @@ const Card = styled.div`
     border-radius:2rem;
     overflow:hidden;
     position: relative;
-
     img{
         border-radius: 3rem;
         position: absolute;
@@ -111,4 +105,4 @@ const Gradient=styled.div`
     background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.5));
 `;
 
-export default Popular
+export default Popular 
