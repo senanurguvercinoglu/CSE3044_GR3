@@ -37,8 +37,19 @@ function Recipe() {
         <Button className={activeTab==='ingredients'?'active':''}
         onClick={()=>setActiveTab('ingredients')}>Ingredients
          </Button>
+
+         <Button className={activeTab==='utensils'?'active':''}
+        onClick={()=>setActiveTab('utensils')}>Utensils
+         </Button>
+
+
+
+
          {activeTab === 'instructions'&&(
           <div>
+            <h1 dangerouslySetInnerHTML={{__html: '' + details.calorie + ' calories'}}></h1>
+
+
            <h3 dangerouslySetInnerHTML={{__html:details.recipe_description}}></h3>
 
          </div>
@@ -49,6 +60,19 @@ function Recipe() {
            <li key={i.id}>{i.name}</li>))}
          </ul>
          )}
+        
+        {activeTab === 'utensils'&&(
+           <ul>
+           {details.utensils.map((u)=>(
+           <li key={u.id}>{u.name}</li>))}
+         </ul>
+         )}
+
+        
+           
+            
+        
+
 
        </Info>
     </DetailWrapper>
