@@ -27,6 +27,10 @@ function Recipe() {
       <div>
         <h2> 
           {details.name}
+
+       
+          <br></br>
+          <img src={details.image} width="300" height="300"/>
         </h2>
       </div>
       <Info>
