@@ -9,9 +9,9 @@ function Searched() {
   
     const getSearched = async(name)=>{
 
-        const data = await fetch(`http://127.0.0.1:8000/recipe/`);
+        const data = await fetch(`http://127.0.0.1:8000/recipe/search/?query=${name}`);
         const recipes = await data.json();
-        setSearchedRecipes(recipes.results);
+        setSearchedRecipes(recipes);
 
     };
     useEffect(()=>{
@@ -23,11 +23,8 @@ function Searched() {
             return(
                 <Card key={item.id}>
                     <Link to={'/recipe/'+item.id}>
-                    <img src={item.image} alt=""/> 
-                    <h4>{item.title}</h4> 
+                    <h4>{item.name}</h4> 
                     </Link>
-                    
-
                 </Card>
 
             );

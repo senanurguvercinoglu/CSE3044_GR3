@@ -9,7 +9,7 @@ function Recipe() {
   const[activeTab,setActiveTab]=useState('instructions');
 
   const fetchDetails=async()=>{
-    const data=await fetch(`http://127.0.0.1:8000/recipe/`
+    const data=await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=7e9971ff4e9045fda9e3bb69995c6f81`
     );
     const detailData=await data.json();
     setDetails(detailData);
@@ -20,9 +20,9 @@ function Recipe() {
     fetchDetails();
 
   },[params.name]);
-  
-  
-  
+
+
+
   return (
     <DetailWrapper>
       <div>
@@ -51,7 +51,7 @@ function Recipe() {
            <li key={ingredient.id}>{ingredient.original}</li>))}
          </ul>
          )}
-        
+
        </Info>
     </DetailWrapper>
  );
@@ -64,14 +64,12 @@ const DetailWrapper=styled.div`
     background: linear-gradient(35deg, #494949,#313131);
     color:white;
   }
-
   h2{
     margin-bottom: 2rem;
   }
   li{
     font-size:1.2rem;
     line-height:2.5rem;
-
   }
   ul{
     margin-top:2rem;
@@ -94,4 +92,4 @@ const Info=styled.div`
      
     `;
 
-export default Recipe;
+export default Recipe; 
