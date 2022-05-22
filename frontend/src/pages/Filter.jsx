@@ -80,8 +80,25 @@ export default class Example extends Component {
     });
   };
 
+
+
   getFilteredRecipes = () => {
-    console.log(this.state); 
+    {/*
+      1- Statedeki utensil ve ingredient ID'lerini birlestirip bir string haline getir
+      2- requesti yolla
+      3- requestten donen jsonla ----bir şekilde----- render et
+    */}
+    
+    
+    this.ingredient_ids = this.state.optionSelectedIngredients.map(i => i.value);
+    this.utensil_ids = this.state.optionSelectedUtensils.map(u => u.value);
+
+    this.ingredients_str = this.ingredient_ids.join('_');
+    this.utensils_str = this.utensil_ids.join('_');
+    
+    
+    console.log(this.ingredients_str); 
+    console.log(this.utensils_str);
   }
 
   
