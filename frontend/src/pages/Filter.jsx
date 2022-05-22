@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 
 import { default as ReactSelect } from "react-select";
@@ -61,7 +63,8 @@ export default class Example extends Component {
     super(props);
     this.state = {
       optionSelectedUtensils: [],
-      optionSelectedIngredients: []
+      optionSelectedIngredients: [],
+      recipes: []
 
     };
   }
@@ -102,11 +105,11 @@ export default class Example extends Component {
     
     this.request_url  = 'http://127.0.0.1:8000/recipe/filter/?';
 
-    if (this.ingredients_str != '') {
+    if (this.ingredients_str !== '') {
         this.request_url += 'i=' + this.ingredients_str;
     }
 
-    if (this.utensils_str != '') {
+    if (this.utensils_str !== '') {
       if (this.request_url.includes('i=')) {
         this.request_url += '&';
       }
@@ -114,7 +117,11 @@ export default class Example extends Component {
     }
 
     const data = await fetch(this.request_url);
-    console.log(await data.json());
+    
+
+    this.setState({
+      recipes: await data.json()
+    }); 
 
 
   }
@@ -169,11 +176,43 @@ export default class Example extends Component {
         Find recipes
     </button>
 
+
+    <Grid>
+        {this.state.recipes.map((item)=>{
+            return(
+                <Card  key={item.id}>
+                    <Link to={'/recipe/'+item.id}>
+                    <img  src={item.image} alt=""/> 
+                    <h4>{item.name}</h4> 
+                    </Link>
+                </Card>
+
+            );
+        })}
+        </Grid>
           
       </span>
     );
   }
 }
+
+const Grid=styled.div`
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));
+    grid-gap:3rem;
+`;
+const Card=styled.div`
+    img{
+        width:100%;
+        border-radius:2rem;
+    }
+    a{
+        text-decoration:none;
+    }
+    h4{
+        text-align:center;
+        padding:1rem;
+    }`;
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<Example />, rootElement);
