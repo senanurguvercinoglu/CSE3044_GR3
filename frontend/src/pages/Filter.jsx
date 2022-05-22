@@ -22,18 +22,21 @@ const Option = (props) => {
   );
 };
 
+
+
 export default class Example extends Component {
     
   constructor(props) {
     super(props);
     this.state = {
-      optionSelectedUtensils: null,
-      optionSelectedIngredients: null
+      optionSelectedUtensils: [],
+      optionSelectedIngredients: []
 
     };
   }
 
   handleChangeUtensils = (selected) => {
+
     this.setState({
       optionSelectedUtensils: selected
     });
@@ -44,6 +47,14 @@ export default class Example extends Component {
     });
   };
 
+  getFilteredRecipes = () => {
+    console.log(this.state); 
+  }
+
+  
+
+
+
   render() {
     return (
      
@@ -53,10 +64,13 @@ export default class Example extends Component {
         data-trigger="focus"
         data-content="Please selecet account(s)"
       >
+
+
+
       <h1 >Utensils</h1>
       <ReactSelect 
           options={colourOptions}
-          isMulti
+          isMulti={true}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
           components={{
@@ -66,11 +80,13 @@ export default class Example extends Component {
           allowSelectAll={true}
           value={this.state.optionSelectedUtensils}
         />
-        <h1>Ingredients</h1>
 
+
+
+        <h1>Ingredients</h1>
         <ReactSelect
           options={utensil}
-          isMulti
+          isMulti={true}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
           components={{
@@ -80,6 +96,12 @@ export default class Example extends Component {
           allowSelectAll={true}
           value={this.state.optionSelectedIngredients}
         />
+
+    <button onClick={this.getFilteredRecipes}>
+        Find recipes
+    </button>
+
+          
       </span>
     );
   }
