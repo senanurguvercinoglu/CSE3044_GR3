@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { colourOptions } from "./data.jsx";
-import { utensil } from "./data2.jsx";
+
 
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
@@ -23,6 +22,38 @@ const Option = (props) => {
 };
 
 
+const utensilOptions = [
+  {label: "tepsi", value: "1"},
+  {label: "rende", value: "2"},
+  {label: "şef bıçağı", value: "3"},
+  {label: "fırın", value: "5"},
+  {label: "ızgara", value: "6"},
+  {label: "mutfak robotu", value: "7"},
+  {label: "büyük kaşık", value: "8"},
+  {label: "süzgeç", value: "9"},
+  {label: "mikser", value: "10"}
+]
+
+const ingredientOptions = [
+  {label: "pirinç", value: "1"},
+  {label: "bulgur", value: "2"},
+  {label: "burger ekmeği", value: "3"},
+  {label: "kıyma", value: "4"},
+  {label: "pul biber", value: "5"},
+  {label: "süt", value: "6"},
+  {label: "su", value: "7"},
+  {label: "yumurta", value: "8"},
+  {label: "midye", value: "9"},
+  {label: "soda", value: "10"},
+  {label: "soğan", value: "11"},
+  {label: "kabartma tozu", value: "12"},
+  {label: "patates", value: "13"},
+  {label: "kaşar peyniri", value: "14"},
+  {label: "zeytinyağı", value: "15"},
+  {label: "domates", value: "16"},
+  {label: "soğan", value: "17"}
+]
+
 
 export default class Example extends Component {
     
@@ -34,6 +65,8 @@ export default class Example extends Component {
 
     };
   }
+  
+
 
   handleChangeUtensils = (selected) => {
 
@@ -69,7 +102,7 @@ export default class Example extends Component {
 
       <h1 >Utensils</h1>
       <ReactSelect 
-          options={colourOptions}
+          options={utensilOptions}
           isMulti={true}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
@@ -85,7 +118,7 @@ export default class Example extends Component {
 
         <h1>Ingredients</h1>
         <ReactSelect
-          options={utensil}
+          options={ingredientOptions}
           isMulti={true}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
