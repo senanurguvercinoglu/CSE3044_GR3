@@ -115,7 +115,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 ingredients__id=i_id
             )
 
-        serializer = RecipeSerializer(recipes, many=True, context={'request': request})
+        serializer = RecipeSearchSerializer(recipes, many=True, context={'request': request})
         return Response(serializer.data)
 
 
