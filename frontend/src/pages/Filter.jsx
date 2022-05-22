@@ -82,11 +82,15 @@ export default class Example extends Component {
 
 
 
-  getFilteredRecipes = () => {
+  getFilteredRecipes = async () => {
     {/*
-      1- Statedeki utensil ve ingredient ID'lerini birlestirip bir string haline getir
-      2- requesti yolla
+      DONE 1- Statedeki utensil ve ingredient ID'lerini birlestirip bir string haline getir
+      DONE 2- requesti yolla
       3- requestten donen jsonla ----bir şekilde----- render et
+
+
+
+      http://127.0.0.1:8000/recipe/filter/?u=1&i=1
     */}
     
     
@@ -96,9 +100,23 @@ export default class Example extends Component {
     this.ingredients_str = this.ingredient_ids.join('_');
     this.utensils_str = this.utensil_ids.join('_');
     
-    
-    console.log(this.ingredients_str); 
-    console.log(this.utensils_str);
+    this.request_url  = 'http://127.0.0.1:8000/recipe/filter/?';
+
+    if (this.ingredients_str != '') {
+        this.request_url += 'i=' + this.ingredients_str;
+    }
+
+    if (this.utensils_str != '') {
+      if (this.request_url.includes('i=')) {
+        this.request_url += '&';
+      }
+      this.request_url += 'u=' + this.utensils_str;
+    }
+
+    const data = await fetch(this.request_url);
+    console.log(await data.json());
+
+
   }
 
   
